@@ -25,7 +25,7 @@ const signUpSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
-const signUp = () => {
+const SignUp = () => {
   const router = useRouter();
   const signUp = useFormik({
     initialValues: {
@@ -298,4 +298,4 @@ const signUp = () => {
   );
 };
 
-export default signUp;
+export default SignUp;
