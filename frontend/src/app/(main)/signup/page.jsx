@@ -37,7 +37,7 @@ const SignUp = () => {
     onSubmit(values, { resetForm, setSubmitting }) {
       console.log(values);
       axios
-        .post("http://localhost:5001/user/add", values)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/user/add`, values)
         .then((response) => {
           console.log(response.status);
           resetForm();
