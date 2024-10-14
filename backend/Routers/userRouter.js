@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const Model = require('../Models/UserModel');
+const Model = require('../Model/userModel');
 
 
 router.get('/test',(req,res)=>{
