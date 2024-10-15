@@ -63,7 +63,7 @@ const SignUp = () => {
   return (
     <div>
       <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-black">
-        <p className="text-white font-normal text-5xl font-poppins">Register</p>
+        <p className="text-white font-normal text-5xl font-poppins">Seller Register</p>
         <div className="mt-4 flex flex-row gap-1 justify-center items-center">
           <p className="text-white text-lg font-medium font-poppins">Home</p>
           <button className="bg-white h-[18px]">
@@ -81,7 +81,7 @@ const SignUp = () => {
             </svg>
           </button>
           <p className="text-white text-lg font-extralight font-poppins">
-            Register
+            Seller Register
           </p>
         </div>
       </div>
