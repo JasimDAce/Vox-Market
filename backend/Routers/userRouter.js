@@ -5,12 +5,14 @@ const jwt =require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
-
+const JWT_SECRET=process.env.JWT_SECRET || 'topsecret';
 const maxAge = 60*60*24*1;
+
+
 
 const jwtSignature =(id)=>{
     const payload = {id};
-   return jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:maxAge});
+   return jwt.sign(payload,JWT_SECRET,{expiresIn:maxAge});
 };
 
 const hashPassword = (plainTextPassword) => {
