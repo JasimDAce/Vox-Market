@@ -3,12 +3,11 @@ const router = express.Router();
 const Model = require('../Model/userModel');
 const jwt =require("jsonwebtoken"); 
 const bcrypt = require('bcrypt');
+const {requireAuth} = require("../middleware/authMiddleware");
 require('dotenv').config();
 
-const JWT_SECRET=process.env.JWT_SECRET || 'topsecret';
+const JWT_SECRET=process.env.JWT_SECRET || 'topsecret';//change this code after every thing is working
 const maxAge = 60*60*24*1;
-
-
 
 const jwtSignature =(id)=>{
     const payload = {id};
@@ -46,6 +45,7 @@ router.post('/addUser',async (req,res)=>
         .then((result) => {
             const token = jwtSignature(result._id);
             res.cookie('jwt',token,{maxAge:maxAge*1000});
+
             console.log(token);
             console.log("new Password: ",newPass);
             
@@ -56,6 +56,32 @@ router.post('/addUser',async (req,res)=>
         });
         
     });
+
+    router.post('/authenticate',async (req,res)=>{
+        const {email,password} =req.body;
+
+        Model.findOne({email:email}).then((user) => {
+            if(!user){
+               return res.status(404).json('User not Found');
+            }else{
+                bcrypt.compare(password,user.password,(err,isMatch)=>{
+                    if(isMatch){
+                        const token = jwtSignature(user._id);
+                        res.cookie('jwt',token,{maxAge:maxAge*1000});
+                        return res.status(200).json('Login success');
+                    }else{
+                        return res.status(400).json("Login failed");
+                    }
+                })
+            }
+            
+        }).catch((err) => {
+            console.log(err);
+            res.status(400).json(err);
+        });
+    })
+
+    
 
 
 module.exports = router;

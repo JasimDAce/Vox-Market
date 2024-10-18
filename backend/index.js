@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const {requireAuth} = require("./middleware/authMiddleware");
 const UsrRout = require('./Routers/userRouter');
 
 
@@ -23,6 +24,11 @@ app.use('/u',UsrRout);//this passes all req(/u) to UsrRouter
 app.get('/test',(req,res)=>{
     res.send("test : Working")
 });
+
+app.get('/',requireAuth,(req,res)=>{
+    console.log('inside home');
+    res.send('hello');
+})
 
 app.listen(port,()=>{
     console.log("server started at port : "+port);
