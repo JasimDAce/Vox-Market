@@ -3,9 +3,11 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import axios from "axios";
 import React from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function Home() {
-
+  const router = useRouter();
   const runonce = useRef(false);
   useEffect(() => {
     if(!runonce.current){
@@ -14,6 +16,9 @@ export default function Home() {
       console.log(result);
     }).catch((err) => {
       console.log(err);
+      if (err.response.status === 401){
+        router.push('/login');
+      }
     });
     }
    
