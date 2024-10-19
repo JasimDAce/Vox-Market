@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { motion } from "framer-motion";
 import * as Yup from "yup";
 
 const signUpSchema = Yup.object().shape({
@@ -91,7 +90,7 @@ const SellerLogin = () => {
 
       <form
         onSubmit={signUp.handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 "
+        className="flex flex-col gap-6 "
       >
     
 
