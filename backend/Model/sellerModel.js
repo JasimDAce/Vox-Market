@@ -8,7 +8,7 @@ const sellerSchema = new Schema({
     phoneNumber: { type: String },
     profileImage: { type: String },
   
-    businessName: { type: String, required: true },
+    businessName: { type: String, required: false },
     businessAddress: {
       street: String,
       city: String,
@@ -30,7 +30,7 @@ const sellerSchema = new Schema({
   
     totalProducts: { type: Number, default: 0 },
     ratings: { type: Number, default: 0 },
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }], // Referencing a review model
+    // reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }], // Referencing a review model
     totalSales: { type: Number, default: 0 },
   
     status: { type: String, enum: ['Active', 'Inactive', 'Banned'], default: 'Active' },

@@ -42,11 +42,11 @@ const SignUp = () => {
     onSubmit(values, { resetForm, setSubmitting }) {
       console.log(values);
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/user/add`, values)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/s/addSeller`, values)
         .then((response) => {
           console.log(response.status);
           resetForm();
-          toast.success("user added successfully");
+          toast.success("Seller added successfully");
           router.push("/");
         })
         .catch((err) => {

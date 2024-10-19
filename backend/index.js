@@ -3,6 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const {requireAuth} = require("./middleware/authMiddleware");
 const UsrRout = require('./Routers/userRouter');
+const SlrRout = require('./Routers/sellerRouter')
 
 
 const app = express();
@@ -19,6 +20,8 @@ app.use(express.json());//this middleware is used to convert json_req to object_
 app.use(cookieParser());
 
 app.use('/u',UsrRout);//this passes all req(/u) to UsrRouter
+
+app.use('/s',SlrRout);
 
 
 app.get('/test',(req,res)=>{
