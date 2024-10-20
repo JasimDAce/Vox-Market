@@ -62,15 +62,16 @@ router.post('/addUser',async (req,res)=>
 
         Model.findOne({email:email}).then((user) => {
             if(!user){
-               return res.status(404).json('User not Found');
+               return res.status(404).json({message:'User not Found'});
             }else{
                 bcrypt.compare(password,user.password,(err,isMatch)=>{
-                    if(isMatch){
+                    if(isMatch === true && err === false){
                         const token = jwtSignature(user._id);
                         res.cookie('jwt',token,{maxAge:maxAge*1000});
-                        return res.status(200).json('Login success');
+                        return res.status(200).json({message:'Login success'});
                     }else{
-                        return res.status(400).json("Login failed");
+                        console.log(err);
+                        return res.status(400).json({message:"Login failed"});
                     }
                 })
             }
@@ -79,6 +80,11 @@ router.post('/addUser',async (req,res)=>
             console.log(err);
             res.status(400).json(err);
         });
+    })
+
+    router.get('/logout',(req,res)=>{
+        res.cookie('jwt','',{maxAge:1});
+        res.status(201).json({message:'Logout user success'});
     })
 
     
