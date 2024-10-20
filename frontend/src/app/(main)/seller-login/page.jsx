@@ -6,54 +6,41 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 
-const signUpSchema = Yup.object().shape({
- 
-  email: Yup.string().email("Invalid email").required("email is required"),
-  password: Yup.string()
-    .required("password is required")
-    .matches(/[a-z]/, "must include a lower case")
-    .matches(/[A-Z]/, "must include an upper case")
-    .matches(/[0-9]/, "must include a number")
-    .matches(/\w/, "must include a special character"),
- 
-
-phoneNumber: Yup.string()
-.required("Phone number is required")
-.matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"), 
-});
-
-
+const SellerLoginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string()
+      .required("Please Enter your password")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+      )
+      ,
+  });
 const SellerLogin = () => {
 
   const router = useRouter();
-  const signUp = useFormik({
+  const loginForm = useFormik({
     initialValues: {
-     
+      name: "",
       email: "",
       password: "",
       
-     
     },
-    onSubmit(values, { resetForm, setSubmitting }) {
+    onSubmit: (values ,{resetForm,setSubmitting}) => {
       console.log(values);
-      axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/user/add`, values)
-        .then((response) => {
-          console.log(response.status);
-          resetForm();
-          toast.success("user added successfully");
-          router.push("/");
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.data.code === 11000) {
-            toast.error("Email already exists");
-          }
-          setSubmitting(false);
-        });
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/s/authenticate`,values)
+      .then((result) => {
+        toast.success('Login Success')
+        localStorage.setItem('token',result.data.token);
+        router.push('./')
+      }).catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message)
+      });
     },
-    validationSchema: signUpSchema,
+    validationSchema: SellerLoginSchema,
   });
+
   return (
     <div>
     <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-black">
@@ -89,7 +76,7 @@ const SellerLogin = () => {
       </p>
 
       <form
-        onSubmit={signUp.handleSubmit}
+        onSubmit={loginForm.handleSubmit}
         className="flex flex-col gap-6 "
       >
     
@@ -103,12 +90,12 @@ const SellerLogin = () => {
             type="email"
             name="email"
             placeholder="your.email@example.com"
-            onChange={signUp.handleChange}
-            value={signUp.values.email}
+            onChange={loginForm.handleChange}
+            value={loginForm.values.email}
           />
-          {signUp.touched.email && (
+          {loginForm.touched.email && (
             <p className="text-xs text-red-600 mt-2" id="email-error">
-              {signUp.errors.email}
+              {loginForm.errors.email}
             </p>
           )}
         </div>
@@ -122,26 +109,23 @@ const SellerLogin = () => {
             type="password"
             name="password"
             placeholder="********"
-            onChange={signUp.handleChange}
-            value={signUp.values.password}
+            onChange={loginForm.handleChange}
+            value={loginForm.values.password}
           />
-          { signUp.touched.password && 
+          { loginForm.touched.password && 
 
 <p className="text-xs text-red-600 mt-2" id="password-error">
 
-{signUp.errors.password}
+{loginForm.errors.password}
 
 </p>
 }
         </div>
-
-      
-       
-
-      
-
         <div className="md:col-span-2">
-          <button className="w-full bg-[#2F6EB8] text-white p-2 rounded-md font-bold">
+          <button
+          type="submit"
+          className="w-full bg-[#2F6EB8] text-white p-2 rounded-md font-bold"
+          >
           
             Login
           </button>

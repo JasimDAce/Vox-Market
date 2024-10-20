@@ -79,6 +79,39 @@ router.post('/addSeller',async (req,res)=>
         });
     })
 
+    // router.post("/authenticate", (req, res) => {
+    //     Model.findOne(req.body)
+    //       .then((result) => {
+    //         if (result) {
+    //           //JWT to generate and verify the token and .env is used
+    //           //payload , secretkey, expiry
+      
+    //           const { _id, email, password } = result;
+    //           const payload = { _id, email, password };
+    //           jwt.sign(
+    //             payload,
+    //             "process.env.JWT_SECRET",
+    //             { expiresIn: "1hr" },
+    //             (err, token) => {
+    //               if (err) {
+    //                 console.log(err);
+    //                 res.status(500).json(err);
+    //               } else {
+    //                 res.status(200).json({ token: token });
+    //               }
+    //             }
+    //           );
+    //         } else {
+    //           res.status(401).json({ message: "Invalid Credentials" });
+    //         }
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //         res.status(500).json(err);
+    //       });
+    //   });
+      
+
     router.get('/test',(req,res)=>{
         res.send("User Route working")
     });
