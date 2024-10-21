@@ -65,7 +65,7 @@ router.post('/addUser',async (req,res)=>
                return res.status(404).json({message:'User not Found'});
             }else{
                 bcrypt.compare(password,user.password,(err,isMatch)=>{
-                    if(isMatch === true && err === false){
+                    if(isMatch){
                         const token = jwtSignature(user._id);
                         res.cookie('jwt',token,{maxAge:maxAge*1000});
                         return res.status(200).json({message:'Login success'});
@@ -85,6 +85,28 @@ router.post('/addUser',async (req,res)=>
     router.get('/logout',(req,res)=>{
         res.cookie('jwt','',{maxAge:1});
         res.status(201).json({message:'Logout user success'});
+    })
+
+    router.get('/profile',requireAuth,(req,res)=>{
+        const user = req.user;
+        console.log(user);
+        
+        if(!user){
+            return res.status(400).json({message:"User not found"});
+        }
+        
+        res.status(200).json(user);
+
+
+        // Model.findById(userId).select('-password')
+        // .then((result) => {
+        //     console.log(result); 
+        //     res.status(200).json(result);
+           
+        // }).catch((err) => {
+        //     res.status(400).json(err);
+        // });
+        
     })
 
     
