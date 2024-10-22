@@ -46,7 +46,7 @@ const BrowseProduct = () => {
           quality={100}/>
           <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
           <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-6 font-medium">₹25,000</p>
+          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
          
         </div>
         {/* Add more product cards here */}
@@ -57,7 +57,7 @@ const BrowseProduct = () => {
           quality={100}/>
          <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
           <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-6 font-medium">₹25,000</p>
+          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
          
         </div>
         <div className=" bg-[#F4F5F7]">
@@ -67,7 +67,7 @@ const BrowseProduct = () => {
           quality={100}/>
          <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
           <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-6 font-medium">₹25,000</p>
+          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
          
         </div>
         <div className=" bg-[#F4F5F7]">
@@ -77,7 +77,7 @@ const BrowseProduct = () => {
           quality={100}/>
           <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
           <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-6 font-medium">₹25,000</p>
+          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
          
         </div>
       </div>
