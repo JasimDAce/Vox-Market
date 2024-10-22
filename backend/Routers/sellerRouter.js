@@ -32,13 +32,16 @@ router.post("/addSeller", (req, res) => {
     });
 
     router.post("/authenticate", (req, res) => {
-    Model.findOne(req.body)
+    Model.findOne({email : req.body.email})
         .then((result) => {
         if (result) {
             //JWT to generate and verify the token and .env is used
             //payload , secretkey, expiry
     
             const { _id, email, password } = result;
+            if(password === req.body.password){
+
+            
             const payload = { _id, email, password };
             jwt.sign(
             payload,
@@ -47,12 +50,12 @@ router.post("/addSeller", (req, res) => {
             (err, token) => {
                 if (err) {
                 console.log(err);
-                res.status(500).json(err);
+                return res.status(500).json(err);
                 } else {
-                res.status(200).json({ token: token });
+                return res.status(200).json({ token: token });
                 }
             }
-            );
+            )}
         } else {
             res.status(401).json({ message: "Invalid Credentials" });
         }
