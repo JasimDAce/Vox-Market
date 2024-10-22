@@ -109,6 +109,30 @@ router.post('/addUser',async (req,res)=>
         
     })
 
+    router.put('/profile',requireAuth,(req,res)=>{
+        const oldUser =req.user;
+        const userId =req.user._id;
+        const newUser = req.body;
+
+        if (!newUser.email || !newUser.name) {
+            return res.status(400).json({ message: "Name and email are required" });
+        }
+
+        Model.findByIdAndUpdate(userId,{
+            name,
+            email,
+            phoneNumber
+        },{new :true}).select('-password').then((result) => {
+            res.status(200).json({
+                message: "Profile updated successfully",
+                user: result
+            });
+        }).catch((err) => {
+            console.error("Error updating profile:", err);
+            res.status(500).json({ message: "Internal server error" });
+        });
+    })
+
     
 
 
