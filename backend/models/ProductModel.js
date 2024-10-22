@@ -28,12 +28,6 @@ const productSchema  = new Schema({
         type: String,
         required: true,
         trim: true,
-        validate: {
-          validator: function (v) {
-            return /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i.test(v);
-          },
-          message: 'Please enter a valid image URL'
-        }
       },
       description: {
         type: String,
@@ -46,4 +40,4 @@ const productSchema  = new Schema({
       }
     });
     
-  module.exports = model("productCollections", productSchema );
+  module.exports = model("productCollection", productSchema );

@@ -1,34 +1,33 @@
 'use client'
-import React, { useState } from 'react';
+import axios from 'axios';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 const ManageProducts = () => {
   // Sample data to simulate products list
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: 'Wireless Headphones',
-      price: 99.99,
-      stock: 20,
-      category: 'Electronics',
-      imageUrl: 'https://th.bing.com/th/id/OIP.QJj4K-1ZrUY5O9C4MkIe0gHaHa?w=197&h=197&c=7&r=0&o=5&dpr=2&pid=1.7',
-    },
-    {
-      id: 2,
-      name: 'Stylish Jacket',
-      price: 149.99,
-      stock: 10,
-      category: 'Clothing',
-      imageUrl: 'https://th.bing.com/th/id/OIP.MPImESPJQDzXO_yKE21FXgHaJ4?w=155&h=207&c=7&r=0&o=5&dpr=2&pid=1.7',
-    },
-    {
-      id: 3,
-      name: 'Smart Watch',
-      price: 199.99,
-      stock: 5,
-      category: 'Accessories',
-      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStSimFo9UJvXBHAG5OePx51XatFzMKMDxcLg&s',
-    },
-  ]);
+  const [products, setproductData] = useState([]);
+
+
+    const deleteUser = (id) => {
+      axios.delete('http://localhost:5000/p/deletebyid/' + id)
+      .then((result) => {
+        toast.success('User Deleted Successfully');
+        fetch();
+      }).catch((err) => {
+        console.log(err);
+        toast.error('Failed to Delete')
+        
+      });
+    }
+    const fetch = async () =>{
+     const res = await axios.get('http://localhost:5000/p/getall')
+        console.table(res.data);
+        setproductData(res.data)
+    }
+
+    useEffect(() => {
+      fetch();
+    }, [])
 
   // Function to delete a product
   const handleDelete = (id) => {
@@ -100,9 +99,10 @@ const ManageProducts = () => {
 
             {/* Actions: Edit & Delete */}
             <div className="flex space-x-4">
-              <button className="text-[#2F6EB8] font-bold" onClick={() => alert('Edit Product')}>
+              <Link className="text-[#2F6EB8] font-bold"
+              href= {"/seller/update-product/"+ product.id }>
                 Edit
-              </button>
+              </Link>
               <button
                 className="text-red-600 font-bold"
                 onClick={() => handleDelete(product.id)}
@@ -115,9 +115,11 @@ const ManageProducts = () => {
 
         {/* Add New Product Button */}
         <div className="text-right mt-8">
-          <button className="bg-[#2F6EB8] text-white py-2 px-4 rounded-md font-bold">
+          <Link
+          href='./seller/add-product'
+          className="bg-[#2F6EB8] text-white py-2 px-4 rounded-md font-bold">
             Add New Product
-          </button>
+          </Link>
         </div>
       </div>
     </div>

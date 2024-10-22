@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { motion } from "framer-motion";
 import * as Yup from "yup";
 
 const signUpSchema = Yup.object().shape({
