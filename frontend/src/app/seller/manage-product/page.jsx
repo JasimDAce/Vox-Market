@@ -8,8 +8,8 @@ const ManageProducts = () => {
   const [products, setproductData] = useState([]);
 
 
-    const deleteUser = (id) => {
-      axios.delete('http://localhost:5000/p/deletebyid/' + id)
+    const deleteProduct = (id) => {
+      axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/p/deletebyid/` + id)
       .then((result) => {
         toast.success('User Deleted Successfully');
         fetch();
@@ -20,7 +20,7 @@ const ManageProducts = () => {
       });
     }
     const fetch = async () =>{
-     const res = await axios.get('http://localhost:5000/p/getall')
+     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/p/getall`)
         console.table(res.data);
         setproductData(res.data)
     }
@@ -31,7 +31,7 @@ const ManageProducts = () => {
 
   // Function to delete a product
   const handleDelete = (id) => {
-    const updatedProducts = products.filter((product) => product.id !== id);
+    const updatedProducts = products.filter((product) => product._id !== id);
     setProducts(updatedProducts);
   };
 
@@ -78,7 +78,7 @@ const ManageProducts = () => {
 
         {/* Product Rows */}
         {products.map((product) => (
-          <div key={product.id} className="grid grid-cols-5 gap-4 items-center border-b py-3">
+          <div key={product._id} className="grid grid-cols-5 gap-4 items-center border-b py-3">
             {/* Product Image */}
             <img
               src={product.imageUrl}
@@ -100,7 +100,7 @@ const ManageProducts = () => {
             {/* Actions: Edit & Delete */}
             <div className="flex space-x-4">
               <Link className="text-[#2F6EB8] font-bold"
-              href= {"/seller/update-product/"+ product._id }
+              href= {"./update-product/"+ product._id }
               
               >
                 
@@ -108,7 +108,7 @@ const ManageProducts = () => {
               </Link>
               <button
                 className="text-red-600 font-bold"
-                onClick={() => handleDelete(product.id)}
+                onClick={() => deleteProduct(product._id)}
               >
                 Delete
               </button>
@@ -119,7 +119,7 @@ const ManageProducts = () => {
         {/* Add New Product Button */}
         <div className="text-right mt-8">
           <Link
-          href='./seller/add-product'
+          href='./add-product'
           className="bg-[#2F6EB8] text-white py-2 px-4 rounded-md font-bold">
             Add New Product
           </Link>

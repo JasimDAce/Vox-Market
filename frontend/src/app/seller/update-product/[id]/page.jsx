@@ -2,26 +2,27 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 
-const UpdateProduct = ({ existingProduct }) => {
+import toast from 'react-hot-toast';
+import { useParams, useRouter } from 'next/navigation';
+
+const UpdateProduct = () => {
     const { id } = useParams(); // Extracts the product ID from the URL
     const [initialValues, setInitialValues] = useState({
-      productName: '',
+      name: '',
       price: '',
       description: '',
       category: '',
       stock: '',
       images: '',
+      imageUrl: '',
     });
     const router = useRouter();
   
     // Function to fetch the product data
     const getUserData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/p/getbyid/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/p/getbyid/${id}`);
         console.log(res.data);
         setInitialValues(res.data);
       } catch (error) {
@@ -32,11 +33,12 @@ const UpdateProduct = ({ existingProduct }) => {
   
     useEffect(() => {
       getUserData();
+      console.log(id);
     }, [id]);
   
     const submitForm = async (values, { setSubmitting }) => {
       try {
-        const result = await axios.put(`http://localhost:5000/p/updatebyid/${id}`, values);
+        const result = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/p/updatebyid/${id}`, values);
         console.log(result.status);
         toast.success("Updated Successfully");
         router.back(); // Redirects back to the previous page
@@ -91,10 +93,10 @@ const UpdateProduct = ({ existingProduct }) => {
               <Field
                 className="border border-gray-300 p-2 rounded-md"
                 type="text"
-                name="productName"
+                name="name"
                 placeholder="Product Name"
               />
-              <ErrorMessage name="productName" component="div" className="text-red-500" />
+              <ErrorMessage name="name" component="div" className="text-red-500" />
             </div>
 
             {/* Product Price */}
@@ -139,7 +141,7 @@ const UpdateProduct = ({ existingProduct }) => {
               <Field
                 className="border border-gray-300 p-2 rounded-md"
                 type="text"
-                name="images"
+                name="imageUrl"
                 placeholder="Image URL"
               />
               <ErrorMessage name="images" component="div" className="text-red-500" />
