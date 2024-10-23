@@ -1,7 +1,30 @@
+'use client'
+import axios from 'axios';
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const BrowseProduct = () => {
+  const [products, setproducts] = useState([]);
+  const runOnce = useRef(false);
+
+  const fetch =()=>
+  {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/p/getall`).then((result) => {
+      console.table(result.data);
+      setproducts(result.data);
+      console.table(products);
+  }).catch((err) => {
+    console.log(err);
+  });
+  }
+  useEffect(() => {
+    if(!runOnce.current){
+      runOnce.current = true;
+      fetch();
+    }
+    
+  }, [])
+  
   return (
     <div>
     <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-black">
@@ -39,47 +62,21 @@ const BrowseProduct = () => {
       {/* Here you can add product cards or other relevant content for browsing */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-poppins ">
         {/* Example product card */}
-        <div className=" bg-[#F4F5F7]">
-          <Image src="/images/img1.svg" alt="Product Name" 
-          height={250}
-          width={500} 
-          quality={100}/>
-          <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
-          <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
-         
-        </div>
-        {/* Add more product cards here */}
-        <div className=" bg-[#F4F5F7]">
-          <Image src="/images/img1.svg" alt="Product Name" 
-          height={250}
-          width={500} 
-          quality={100}/>
-         <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
-          <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
-         
-        </div>
-        <div className=" bg-[#F4F5F7]">
-          <Image src="/images/img1.svg" alt="Product Name" 
-          height={250}
-          width={500} 
-          quality={100}/>
-         <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
-          <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
-         
-        </div>
-        <div className=" bg-[#F4F5F7]">
-          <Image src="/images/img1.svg" alt="Product Name" 
-          height={250}
-          width={500} 
-          quality={100}/>
-          <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">Syltherine</h2>
-          <p className="text-md font-medium text-[#898989] pl-4 mt-2">Stylish cafe chair</p>
-          <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹25,000</p>
-         
-        </div>
+        {
+          products.map((product)=>{
+              return (<div className=" bg-[#F4F5F7]" key={product._id}>
+                <img src={product.imageUrl} alt={product.name} 
+                height={250}
+                width={500} 
+                quality={100}/>
+                <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">{product.name}</h2>
+                <p className="text-md font-medium text-[#898989] pl-4 mt-2">{product.category}</p>
+                <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹{product.price}</p>
+               
+              </div>)
+          })
+        }
+        
       </div>
     </div>
   </div>
