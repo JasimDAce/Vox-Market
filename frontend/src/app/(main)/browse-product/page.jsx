@@ -71,7 +71,7 @@ const BrowseProduct = () => {
                 quality={100}/>
                 <h2 className="text-2xl font-medium pt-4 text-[#3A3A3A] pl-4">{product.name}</h2>
                 <p className="text-md font-medium text-[#898989] pl-4 mt-2">{product.category}</p>
-                <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">{product.price}</p>
+                <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹{product.price}</p>
                
               </div>)
           })
