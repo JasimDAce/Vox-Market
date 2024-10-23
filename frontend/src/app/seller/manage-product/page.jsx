@@ -100,7 +100,10 @@ const ManageProducts = () => {
             {/* Actions: Edit & Delete */}
             <div className="flex space-x-4">
               <Link className="text-[#2F6EB8] font-bold"
-              href= {"/seller/update-product/"+ product.id }>
+              href= {"/seller/update-product/"+ product._id }
+              
+              >
+                
                 Edit
               </Link>
               <button
