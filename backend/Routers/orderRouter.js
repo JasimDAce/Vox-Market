@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const router = express.Router();
 
-outer.post('/checkout', async (req, res) => {
+router.post('/checkout', async (req, res) => {
     try {
       const { user, items, payment, shippingAddress, totalPrice, taxAmount, shippingCost } = req.body;
   
