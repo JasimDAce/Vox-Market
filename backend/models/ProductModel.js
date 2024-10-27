@@ -40,4 +40,4 @@ const productSchema  = new Schema({
       }
     });
     
-  module.exports = model("productCollection", productSchema );
+  module.exports = model("productcollections", productSchema );

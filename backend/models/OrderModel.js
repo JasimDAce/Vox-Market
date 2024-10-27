@@ -10,7 +10,8 @@ const CheckoutSchema = new Schema({
     {
       product: {
         //   type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
+        type:Types.ObjectId,
+        ref: "productcollections",
         required: true,
       },
       quantity: {
@@ -69,4 +70,4 @@ const CheckoutSchema = new Schema({
   },
 });
 
-module.exports = model("order", CheckoutSchema);
+module.exports = model("orders", CheckoutSchema);

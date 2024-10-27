@@ -42,4 +42,4 @@ const sellerSchema = new Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-module.exports = model("sellercollection", sellerSchema);
+module.exports = model("sellercollections", sellerSchema);
