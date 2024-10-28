@@ -1,16 +1,19 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 
-const { createContext, useContext, useState } = require("react");
+const { createContext, useContext, useState, useEffect } = require("react");
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const router = useRouter();
 
-  const [loggedIn, setLoggedIn] = useState(
-    JSON.parse(localStorage.getItem("user")) || false
-  );
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setLoggedIn(user || false);
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("user");

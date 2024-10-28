@@ -31,8 +31,8 @@ const SellerLogin = () => {
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/s/authenticate`,values)
       .then((result) => {
         toast.success('Login Success')
-        localStorage.setItem('token',result.data.token);
-        router.push('./')
+        localStorage.setItem('sellerToken',result.data.token);
+        router.push('./seller/profile')
       }).catch((err) => {
         console.log(err);
         toast.error(err.response.data.message)

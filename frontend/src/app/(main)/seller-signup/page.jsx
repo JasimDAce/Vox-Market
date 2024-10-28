@@ -46,7 +46,7 @@ const SignUp = () => {
           console.log(response.status);
           resetForm();
           toast.success("Seller added successfully");
-          router.push("/");
+          router.push("./seller/profile");
         })
         .catch((err) => {
           console.log(err);

@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import * as Yup from "yup";
 import useAppContext from "@/context/AppContext";
 
+
 const signUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("email is required"),
   password: Yup.string()
@@ -25,11 +26,12 @@ const Login = () => {
     onSubmit(values, { resetForm, setSubmitting }) {
       console.log(values);
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/u/authenticate`, values)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/u/authenticate`, values,{withCredentials: true})
         .then((response) => {
           console.log(response.status);
           resetForm();
           toast.success("Loggedin successfully");
+      
           localStorage.setItem("user", JSON.stringify(response.data));
           localStorage.setItem("token", response.data.token);
           setLoggedIn(true);
