@@ -4,7 +4,7 @@ const Model = require("../models/OrderModel");
 require("dotenv").config();
 
 
-
+//working from /o/checkout
 router.post('/checkout', async (req, res) => {
     try {
       const { user, items, payment, shippingAddress, totalPrice, taxAmount, shippingCost } = req.body;
