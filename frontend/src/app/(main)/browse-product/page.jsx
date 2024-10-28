@@ -1,6 +1,7 @@
 'use client'
 import axios from 'axios';
 import Image from 'next/image'
+import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react'
 
 const BrowseProduct = () => {
@@ -64,7 +65,7 @@ const BrowseProduct = () => {
         {/* Example product card */}
         {
           products.map((product)=>{
-              return (<div className=" bg-[#F4F5F7]" key={product._id}>
+              return (<Link className=" bg-[#F4F5F7]" key={product._id} href= {"./product-details/"+ product._id } >
                 <img src={product.imageUrl} alt={product.name} 
                 height={250}
                 width={500} 
@@ -73,7 +74,7 @@ const BrowseProduct = () => {
                 <p className="text-md font-medium text-[#898989] pl-4 mt-2">{product.category}</p>
                 <p className=" mt-2 text-[#3A3A3A] pl-4 text-xl mb-7 font-medium">₹{product.price}</p>
                
-              </div>)
+              </Link>)
           })
         }
         

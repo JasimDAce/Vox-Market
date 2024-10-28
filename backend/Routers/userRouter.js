@@ -69,7 +69,12 @@ router.post("/authenticate", async (req, res) => {
           if (isMatch) {
             const token = jwtSignature(user._id);
             res.cookie("jwt", token, { maxAge: maxAge * 1000 });
-            return res.status(200).json({ message: "Login success" });
+            return res.status(200).json({
+              token,
+              name: user.name,
+              email: user.email,
+              avatar: user.avatar,
+            });
           } else {
             console.log(err);
             return res.status(400).json({ message: "Login failed" });

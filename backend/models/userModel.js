@@ -39,6 +39,10 @@ const userSchema = new Schema({
         type: String,
         // required: true,
     },
+    avatar: {
+        type: String,
+        // required: true,
+    },
     role: {
         type: String,
         enum: ['user', 'admin'], // You can adjust roles as needed
