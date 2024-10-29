@@ -33,29 +33,41 @@ const AddProduct = () => {
   }
 
   const onSubmit = async (values, { resetForm, setSubmitting }) => {
-    const formData = new FormData()
-    formData.append('name', values.productName)
-    formData.append('price', values.price)
-    formData.append('description', values.description)
-    formData.append('category', values.category)
-    formData.append('stock', values.stock)
-    formData.append('image', values.image)
+    setSubmitting(true);
+    try {
+      const imageUrl = await uploadImageToCloudinary(values.image);
+      console.log('Image URL:', imageUrl);
+
+    
+    const newProduct = {
+      name: values.productName,
+      price: values.price,
+      description: values.description,
+      category: values.category,
+      stock: values.stock,
+      imageUrl: imageUrl, // Add the image URL here
+    };
   
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/p/addProduct`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      })
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/p/addProduct`,newProduct);
+
       console.log(response.status)
       resetForm()
       setImagePreview(null)
       toast.success('Product Added Successfully')
-      router.push('/')
+      router.replace('/seller/manage-product');
     } catch (err) {
       console.error(err)
       toast.error('Failed to add product')
     } finally {
       setSubmitting(false)
     }
+
+  } catch (error) {
+    console.error('Image upload failed:', error);
+    toast.error("Image upload failed");
+    setSubmitting(false);
+  }
   }
 
   const handleImageChange = (event, setFieldValue) => {
@@ -71,6 +83,28 @@ const AddProduct = () => {
       setImagePreview(null)
     }
   }
+
+  const uploadImageToCloudinary = async (imageFile) => {
+    try {
+      // Initialize form data
+      const fd = new FormData();
+      fd.append('file', imageFile);
+      fd.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET); // Add your Cloudinary upload preset here
+      fd.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME); // Add your Cloudinary cloud name here
+  
+      // Make the POST request to Cloudinary's API
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,fd);
+  
+      // The URL of the uploaded image
+      const imageUrl = response.data.secure_url;
+      console.log('Image uploaded successfully. URL:', imageUrl);
+      return imageUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  };
 
   return (
     <>
