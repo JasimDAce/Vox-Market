@@ -5,7 +5,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { Search, Edit, Trash2, Plus, AlertCircle, ChevronUp, ChevronDown } from 'lucide-react'
-import Navbar from '@/app/components/NewNavbar'
+
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([])

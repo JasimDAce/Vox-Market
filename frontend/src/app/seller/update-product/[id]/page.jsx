@@ -51,11 +51,11 @@ const UpdateProduct = () => {
   
   return (
     <>
-    <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-black">
-        <p className="text-white font-normal text-5xl font-poppins">Update Product</p>
+    <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-[#E0FBE2]">
+        <p className="text-black font-normal text-5xl font-poppins">Update Product</p>
         <div className="mt-4 flex flex-row gap-1 justify-center items-center">
-          <p className="text-white text-lg font-medium font-poppins">Seller</p>
-          <button className="bg-white h-[18px]">
+          <p className="text-black text-lg font-medium font-poppins">Seller</p>
+          <button className="bg-[#E0FBE2] h-[18px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
@@ -69,7 +69,7 @@ const UpdateProduct = () => {
               />
             </svg>
           </button>
-          <p className="text-white text-lg font-extralight font-poppins">
+          <p className="text-black text-lg font-extralight font-poppins">
             Update Product
           </p>
         </div>
