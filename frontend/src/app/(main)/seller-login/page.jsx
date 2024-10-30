@@ -43,11 +43,11 @@ const SellerLogin = () => {
 
   return (
     <div>
-    <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-black">
-      <p className="text-white font-normal text-5xl font-poppins">Seller Login</p>
+    <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-[#F2EFE5]">
+      <p className="text-black font-normal text-5xl font-poppins">Seller Login</p>
       <div className="mt-4 flex flex-row gap-1 justify-center items-center">
-        <p className="text-white text-lg font-medium font-poppins">Home</p>
-        <button className="bg-white h-[18px]">
+        <p className="text-black text-lg font-medium font-poppins">Home</p>
+        <button className="bg-[#F2EFE5] h-[18px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -61,7 +61,7 @@ const SellerLogin = () => {
             />
           </svg>
         </button>
-        <p className="text-white text-lg font-extralight font-poppins">
+        <p className="text-black text-lg font-extralight font-poppins">
           Seller Login
         </p>
       </div>
