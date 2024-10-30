@@ -1,283 +1,214 @@
 "use client";
 import React, { useState } from "react";
-import { Menu, X, ShoppingCart, User, Search } from "lucide-react";
-import useAppContext from "@/context/AppContext";
 import Link from "next/link";
+import Image from "next/image";
+import {
+  ShoppingBag,
+  Package,
+  PlusCircle,
+  Menu,
+  User,
+  Settings,
+  LogOut,
+} from "lucide-react";
+import useAppContext from "@/context/AppContext";
 
-const styles = {
-  header: {
-    backgroundColor: "rgba(26, 32, 44, 0.9)",
-    backdropFilter: "blur(8px)",
-    position: "sticky",
-    top: 0,
-    zIndex: 50,
-  },
-  nav: {
-    maxWidth: "1280px",
-    margin: "0 auto",
-    padding: "0 1rem",
-  },
-  navContent: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: "4rem",
-  },
-  logo: {
-    fontSize: "1.5rem",
-    fontWeight: "bold",
-    background: "linear-gradient(to right, #818cf8, #c084fc)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    textDecoration: "none",
-  },
-  navLinks: {
-    display: "none",
-    "@media (min-width: 768px)": {
-      display: "flex",
-    },
-  },
-  navLink: {
-    color: "#cbd5e0",
-    padding: "0.5rem 0.75rem",
-    borderRadius: "0.375rem",
-    fontSize: "0.875rem",
-    fontWeight: "500",
-    textDecoration: "none",
-    transition: "background-color 0.3s, color 0.3s",
-  },
-  navLinkHover: {
-    backgroundColor: "#4a5568",
-    color: "#ffffff",
-  },
-  iconButton: {
-    color: "#cbd5e0",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    padding: "0.5rem",
-    borderRadius: "0.375rem",
-    transition: "color 0.3s, background-color 0.3s",
-  },
-  iconButtonHover: {
-    color: "#ffffff",
-    backgroundColor: "#4a5568",
-  },
-  mobileMenuButton: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0.5rem",
-    borderRadius: "0.375rem",
-    color: "#cbd5e0",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    transition: "color 0.3s, background-color 0.3s",
-  },
-  mobileMenu: {
-    padding: "0.5rem",
-  },
-  mobileNavLink: {
-    display: "block",
-    padding: "0.5rem 0.75rem",
-    borderRadius: "0.375rem",
-    color: "#cbd5e0",
-    fontSize: "1rem",
-    fontWeight: "500",
-    textDecoration: "none",
-    transition: "background-color 0.3s, color 0.3s",
-  },
-};
-
-const Navbar = () => {
+export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { logout, loggedIn } = useAppContext();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
-    <header style={styles.header}>
-      <nav style={styles.nav}>
-        <div style={styles.navContent}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {!loggedIn ? (
-              <Link href="/login">Login Now</Link>
-            ) : (
-              <button onClick={logout} className="border p-4">
-                Logout
-              </button>
-            )}
-            <a href="/" style={styles.logo}>
-              Cosmic Store
-            </a>
-            <div style={styles.navLinks}>
-              <a
-                href="/"
-                style={styles.navLink}
-                onMouseEnter={(e) =>
-                  Object.assign(e.target.style, styles.navLinkHover)
-                }
-                onMouseLeave={(e) =>
-                  Object.assign(e.target.style, styles.navLink)
-                }
+    <nav className="bg-[#F2EFE5] border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <Link href="/" className="flex-shrink-0">
+              <span className="sr-only">VOX Market</span>
+              <svg
+                className="h-8 w-8 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                Home
-              </a>
-              <a
-                href="/products"
-                style={styles.navLink}
-                onMouseEnter={(e) =>
-                  Object.assign(e.target.style, styles.navLinkHover)
-                }
-                onMouseLeave={(e) =>
-                  Object.assign(e.target.style, styles.navLink)
-                }
-              >
-                Products
-              </a>
-              <a
-                href="/about"
-                style={styles.navLink}
-                onMouseEnter={(e) =>
-                  Object.assign(e.target.style, styles.navLinkHover)
-                }
-                onMouseLeave={(e) =>
-                  Object.assign(e.target.style, styles.navLink)
-                }
-              >
-                About
-              </a>
-              <a
-                href="/contact"
-                style={styles.navLink}
-                onMouseEnter={(e) =>
-                  Object.assign(e.target.style, styles.navLinkHover)
-                }
-                onMouseLeave={(e) =>
-                  Object.assign(e.target.style, styles.navLink)
-                }
-              >
-                Contact
-              </a>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+            </Link>
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                <Link
+                  href="/"
+                  className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  VOX Market
+                </Link>
+              </div>
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <div className="hidden md:block">
+            <div className="ml-4 flex items-center md:ml-6">
+              <button className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add Product
+              </button>
+              <button className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                <Package className="mr-2 h-4 w-4" />
+                Manage Products
+              </button>
+              <button className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                Manage Orders
+              </button>
+              <div className="ml-3 relative">
+                <div>
+                  <button
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="max-w-xs bg-gray-300 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    id="user-menu"
+                    aria-haspopup="true"
+                  >
+                    <span className="sr-only">Open user menu</span>
+                    <Image
+                      className="h-8 w-8 rounded-full"
+                      src="/placeholder.svg?height=32&width=32"
+                      alt="User avatar"
+                      width={32}
+                      height={32}
+                    />
+                  </button>
+                </div>
+                {isDropdownOpen && (
+                  <div
+                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu"
+                  >
+                    <div className="px-4 py-2 text-sm text-gray-700">
+                      <p className="font-medium">John Doe</p>
+                      <p className="text-xs text-gray-500">john@example.com</p>
+                    </div>
+                    <a
+                      href="#"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      <User className="mr-2 h-4 w-4" /> Profile
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      <Settings className="mr-2 h-4 w-4" /> Settings
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />{" "}
+                      {!loggedIn ? (
+                        <Link href="/login">Login Now</Link>
+                      ) : (
+                        <button onClick={logout} className="border p-4">
+                          Logout
+                        </button>
+                      )}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="md:hidden">
             <button
-              aria-label="Search"
-              style={styles.iconButton}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.iconButtonHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.iconButton)
-              }
-            >
-              <Search size={24} />
-            </button>
-            <button
-              aria-label="Shopping cart"
-              style={styles.iconButton}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.iconButtonHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.iconButton)
-              }
-            >
-              <ShoppingCart size={24} />
-            </button>
-            <button
-              aria-label="User account"
-              style={styles.iconButton}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.iconButtonHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.iconButton)
-              }
-            >
-              <User size={24} />
-            </button>
-            <button
-              onClick={toggleMenu}
-              style={styles.mobileMenuButton}
-              aria-expanded={isMenuOpen}
-              aria-label="Toggle menu"
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.iconButtonHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.mobileMenuButton)
-              }
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-black hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
               <span className="sr-only">Open main menu</span>
-              {isMenuOpen ? (
-                <X size={24} aria-hidden="true" />
-              ) : (
-                <Menu size={24} aria-hidden="true" />
-              )}
+              <Menu className="block h-6 w-6" aria-hidden="true" />
             </button>
           </div>
         </div>
-        {isMenuOpen && (
-          <div style={styles.mobileMenu}>
-            <a
+      </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <Link
               href="/"
-              style={styles.mobileNavLink}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.navLinkHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.mobileNavLink)
-              }
+              className="text-black hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Home
+              VOX Market
+            </Link>
+            <a
+              href="#"
+              className="text-black hover:bg-gray-200 flex items-center px-3 py-2 rounded-md text-base font-medium"
+            >
+              <PlusCircle className="mr-2 h-5 w-5" /> Add Product
             </a>
             <a
-              href="/browse-product"
-              style={styles.mobileNavLink}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.navLinkHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.mobileNavLink)
-              }
+              href="#"
+              className="text-black hover:bg-gray-200 flex items-center px-3 py-2 rounded-md text-base font-medium"
             >
-              Products
+              <Package className="mr-2 h-5 w-5" /> Manage Products
             </a>
             <a
-              href="/about"
-              style={styles.mobileNavLink}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.navLinkHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.mobileNavLink)
-              }
+              href="#"
+              className="text-black hover:bg-gray-200 flex items-center px-3 py-2 rounded-md text-base font-medium"
             >
-              About
-            </a>
-            <a
-              href="/contact"
-              style={styles.mobileNavLink}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, styles.navLinkHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, styles.mobileNavLink)
-              }
-            >
-              Contact
+              <ShoppingBag className="mr-2 h-5 w-5" /> Manage Orders
             </a>
           </div>
-        )}
-      </nav>
-    </header>
+          <div className="pt-4 pb-3 border-t border-gray-700">
+            <div className="flex items-center px-5">
+              <div className="flex-shrink-0">
+                <Image
+                  className="h-10 w-10 rounded-full"
+                  src="/placeholder.svg?height=40&width=40"
+                  alt="User avatar"
+                  width={40}
+                  height={40}
+                />
+              </div>
+              <div className="ml-3">
+                <div className="text-base font-medium leading-none text-black">
+                  John Doe
+                </div>
+                <div className="text-sm font-medium leading-none text-gray-600">
+                  john@example.com
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 px-2 space-y-1">
+              <a
+                href="#"
+                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-black hover:bg-gray-200"
+              >
+                <User className="mr-2 h-5 w-5" /> Profile
+              </a>
+              <a
+                href="#"
+                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-black hover:bg-gray-200"
+              >
+                <Settings className="mr-2 h-5 w-5" /> Settings
+              </a>
+              <a
+                href="#"
+                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-black hover:bg-gray-200"
+              >
+                <LogOut className="mr-2 h-5 w-5" /> Sign out
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
   );
-};
-
-export default Navbar;
+}
