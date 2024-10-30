@@ -28,7 +28,7 @@ const BrowseProduct = () => {
   
   return (
     <div>
-    <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-black">
+    <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-[#F2EFE5]">
       <p className="text-white font-normal text-5xl font-poppins">Browse Products</p>
       <div className="mt-4 flex flex-row gap-1 justify-center items-center">
         <p className="text-white text-lg font-medium font-poppins">Home</p>
