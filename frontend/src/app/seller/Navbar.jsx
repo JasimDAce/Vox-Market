@@ -9,7 +9,7 @@ export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   return (
-    <nav className="bg-[#E0FBE2] border-b border-gray-200">
+    <nav className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">

@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
-import { Search, Edit, Trash2, Plus, AlertCircle, ChevronUp, ChevronDown } from 'lucide-react'
-import Navbar from '../Navbar'
-
+import { Search, Edit, Trash2, Plus, AlertCircle, ChevronUp, ChevronDown, ChevronRight, X } from 'lucide-react'
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const [productToDelete, setProductToDelete] = useState(null)
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' })
 
@@ -28,6 +28,14 @@ export default function ManageProducts() {
   useEffect(() => {
     fetchProducts()
   }, [])
+
+  const handleProductClick = (product, event) => {
+    // Prevent click when clicking on action buttons
+    if (event.target.closest('button')) return
+    
+    setSelectedProduct(product)
+    setIsDetailsModalOpen(true)
+  }
 
   const deleteProduct = async (id) => {
     try {
@@ -66,28 +74,21 @@ export default function ManageProducts() {
 
   return (
     <>
-   
-      <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-[#E0FBE2]">
-        <p className="text-black font-normal text-5xl font-poppins">Manage Products</p>
-        <div className="mt-4 flex flex-row gap-1 justify-center items-center">
-          <p className="text-black text-lg font-medium font-poppins">Seller</p>
-          <button className="bg-[#E0FBE2] h-[18px]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fill="currentColor"
-                d="m6 15l5-5l-5-5l1-2l7 7l-7 7z"
-                className="font-medium"
-              />
-            </svg>
-          </button>
-          <p className="text-black text-lg font-extralight font-poppins">
+      <div className="w-full h-[150px] md:h-[320px] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/bg.jpg')] bg-cover bg-top" />
+        <div className="relative container mx-auto px-4 h-full flex flex-col justify-center">
+          <h1 className="text-3xl md:text-5xl font-normal text-black font-poppins mb-4">
             Manage Product
-          </p>
+          </h1>
+          <div className="flex items-center gap-2">
+            <Link href="/seller" className="text-black text-lg font-medium font-poppins hover:underline">
+              Seller
+            </Link>
+            <ChevronRight className="h-5 w-5 text-black flex items-center" />
+            <p className="text-black text-lg font-extralight font-poppins">
+              Manage Product
+            </p>
+          </div>
         </div>
       </div>
 
@@ -144,7 +145,11 @@ export default function ManageProducts() {
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
               {sortedProducts.map((product) => (
-                <tr key={product._id} className="border-b border-gray-200 hover:bg-gray-100">
+                <tr 
+                  key={product._id} 
+                  className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
+                  onClick={(e) => handleProductClick(product, e)}
+                >
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="mr-2">
@@ -202,6 +207,7 @@ export default function ManageProducts() {
         )}
       </div>
 
+      {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-sm w-full">
@@ -224,6 +230,145 @@ export default function ManageProducts() {
           </div>
         </div>
       )}
+
+      {/* Product Details Modal */}
+      {isDetailsModalOpen && selectedProduct && (
+  <div className="fixed inset-0 z-50">
+    {/* Backdrop */}
+    <div className="absolute inset-0 bg-black/60" onClick={() => setIsDetailsModalOpen(false)} />
+    
+    {/* Modal Container */}
+    <div className="relative h-full w-full overflow-y-auto pb-6 sm:pb-0">
+      <div className="min-h-full w-full bg-white sm:min-h-0 sm:w-auto sm:max-w-4xl sm:mx-auto sm:my-8 sm:rounded-xl relative">
+        {/* Mobile Header - Sticky */}
+        <div className="sticky top-0 z-[60] bg-white border-b sm:hidden">
+          <div className="flex justify-between items-center p-4">
+            <h2 className="text-lg font-semibold text-gray-900">Product Details</h2>
+            <button
+              onClick={() => setIsDetailsModalOpen(false)}
+              className="p-2 -mr-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop Close Button */}
+        <button
+          onClick={() => setIsDetailsModalOpen(false)}
+          className="hidden sm:block absolute right-4 top-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors z-[60]"
+          aria-label="Close modal"
+        >
+          <X className="h-6 w-6" />
+        </button>
+
+        {/* Modal Content */}
+        <div className="p-4 sm:p-6 md:p-8">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {/* Left Column - Image */}
+            <div className="space-y-4 sm:space-y-6">
+              <div className="w-full bg-gray-100 rounded-xl overflow-hidden">
+                <div className="aspect-square relative">
+                  <img
+                    src={selectedProduct.imageUrl}
+                    alt={selectedProduct.name}
+                    className="absolute inset-0 w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <p className="text-sm text-gray-500">Price</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+                    ${selectedProduct.price.toFixed(2)}
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-sm text-gray-500">Stock Status</p>
+                  <span className={`
+                    inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-sm font-medium
+                    ${selectedProduct.stock > 0 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-red-100 text-red-800'}
+                  `}>
+                    {selectedProduct.stock > 0 
+                      ? `${selectedProduct.stock} in stock` 
+                      : 'Out of stock'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Details */}
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+                  {selectedProduct.name}
+                </h2>
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                  {selectedProduct.category}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900">Description</h3>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                  {selectedProduct.description}
+                </p>
+              </div>
+
+              <div className="pt-4 sm:pt-6 space-y-4">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900">Actions</h3>
+                <div className="flex flex-col gap-3">
+                  <Link 
+                    href={`./update-product/${selectedProduct._id}`}
+                    className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg
+                      bg-[#2F6EB8] text-white font-medium hover:bg-[#2F6EB8]/90 
+                      transition-colors duration-200 w-full"
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit Product
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setIsDetailsModalOpen(false)
+                      setProductToDelete(selectedProduct)
+                      setIsDeleteModalOpen(true)
+                    }}
+                    className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg
+                      bg-white text-red-600 font-medium border-2 border-red-600
+                      hover:bg-red-50 transition-colors duration-200 w-full"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Delete Product
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-4 sm:pt-6 border-t border-gray-200">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-500">Product ID</p>
+                    <p className="text-xs sm:text-sm font-mono text-gray-700 break-all">
+                      {selectedProduct._id}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-500">Last Updated</p>
+                    <p className="text-xs sm:text-sm text-gray-700">
+                      {new Date(selectedProduct.updatedAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
     </>
   )
 }

@@ -119,20 +119,27 @@ export default function UpdateProduct() {
 
   return (
     <>
-      <div className="w-full h-48 md:h-64 flex flex-col justify-center items-center bg-[#E0FBE2]">
-        <h1 className="text-black font-normal text-5xl font-poppins">Update Product</h1>
-        <div className="mt-4 flex flex-row gap-1 justify-center items-center">
-          <Link href="/seller" className="text-black text-lg font-medium font-poppins hover:underline">
-            Seller
-          </Link>
-          <ChevronRight className="h-5 w-5 text-black" />
-          <p className="text-black text-lg font-extralight font-poppins">Update Product</p>
+      <div className="w-full h-[150px] md:h-[320px]  relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/bg.jpg')] bg-cover bg-top" />
+        <div className="relative container mx-auto px-4 h-full flex flex-col justify-center">
+          <h1 className="text-3xl md:text-5xl font-normal text-black font-poppins mb-4">
+            Update Product
+          </h1>
+          <div className="flex items-center gap-2">
+            <Link href="/seller" className="text-black text-lg font-medium font-poppins hover:underline">
+              Seller
+            </Link>
+            <ChevronRight className="h-5 w-5 text-black flex items-center" />
+            <p className="text-black text-lg font-extralight font-poppins">
+              Update Product
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-md mt-6 md:mt-4 font-poppins">
-     
-        <p className="text-center text-gray-800 mb-10 text-xl font-normal">Update your product details below.</p>
+      <div className="max-w-4xl mx-auto mt-10 p-8 bg-white rounded-lg shadow-md font-poppins">
+      
+        <p className="text-center text-gray-800 mb-8">Update your product details below.</p>
 
         <Formik
           initialValues={initialValues}
