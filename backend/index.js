@@ -6,6 +6,7 @@ const UsrRout = require('./routers/userRouter');
 const SlrRout = require('./routers/SellerRouter');
 const PrdtRout = require('./routers/ProductRouter');
 const orderRout = require('./Routers/orderRouter');
+const imageRout = require('./Routers/cloudinaryRouter');
 
 
 
@@ -26,6 +27,7 @@ app.use('/u',UsrRout);//this passes all req(/u) to UsrRouter
 app.use('/s',SlrRout);
 app.use('/p',PrdtRout);
 app.use('/o',orderRout);
+app.use('/img',imageRout);
 
 app.get('/test',(req,res)=>{
     res.send("test : Working")
