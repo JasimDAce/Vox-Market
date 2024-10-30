@@ -5,6 +5,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { Search, Edit, Trash2, Plus, AlertCircle, ChevronUp, ChevronDown } from 'lucide-react'
+import Navbar from '../Navbar'
 
 
 export default function ManageProducts() {
@@ -65,7 +66,7 @@ export default function ManageProducts() {
 
   return (
     <>
-      <Navbar />
+   
       <div className="w-screen h-48 md:h-64 flex flex-col justify-center items-center bg-[#E0FBE2]">
         <p className="text-black font-normal text-5xl font-poppins">Manage Products</p>
         <div className="mt-4 flex flex-row gap-1 justify-center items-center">
