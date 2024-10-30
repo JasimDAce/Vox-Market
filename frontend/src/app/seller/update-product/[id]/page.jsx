@@ -92,6 +92,7 @@ export default function UpdateProduct() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
+      
       let imageUrl = values.imageUrl
       if (values.image) {
         imageUrl = await uploadImageToCloudinary(values.image)
