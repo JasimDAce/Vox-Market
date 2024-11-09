@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar"
 const categories = [
   { name: "Electronics", image: "/images/landing/category/electronics.jpg" },
   { name: "Fashion", image: "/images/landing/category/fashion.jpg" },
-  { name: "Home", image: "/category-home.jpg" },
+  { name: "Home", image: "/images/landing/category/home.jpg" },
   { name: "Beauty", image: "/category-beauty.jpg" },
   { name: "Sports", image: "/category-sports.jpg" },
   { name: "Books", image: "/category-books.jpg" },
