@@ -52,18 +52,18 @@ export default function Navbar() {
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
-              <button className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
+              <Link href='/seller/add-product' className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Add Product
-              </button>
-              <button className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
+              </Link>
+              <Link href='/seller/manage-product' className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
                 <Package className="mr-2 h-4 w-4" />
                 Manage Products
-              </button>
-              <button className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
+              </Link>
+              <Link href='/seller/manage-order' className="text-black hover:bg-[#B4B4B8] px-3 py-2 rounded-md text-sm font-medium flex items-center">
                 <ShoppingBag className="mr-2 h-4 w-4" />
                 Manage Orders
-              </button>
+              </Link>
               <div className="ml-3 relative">
                 <div>
                   <button
@@ -93,13 +93,13 @@ export default function Navbar() {
                       <p className="font-medium">John Doe</p>
                       <p className="text-xs text-gray-500">john@example.com</p>
                     </div>
-                    <a
-                      href="#"
+                    <Link 
+                      href="/seller/profile"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
                       <User className="mr-2 h-4 w-4" /> Profile
-                    </a>
+                    </Link>
                     <a
                       href="#"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
