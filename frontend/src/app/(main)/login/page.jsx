@@ -17,7 +17,7 @@ const signUpSchema = Yup.object().shape({
 const Login = () => {
   const { setLoggedIn } = useAppContext();
 
-  const router = useRouter();
+  const router = useRouter();  
   const signUp = useFormik({
     initialValues: {
       email: "",
