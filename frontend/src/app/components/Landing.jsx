@@ -1,6 +1,12 @@
+'use client'
+
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Search, ShoppingCart, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const categories = [
   { name: "Electronics", image: "/category-electronics.jpg" },
@@ -28,7 +34,17 @@ const hotDeals = [
   { id: 3, name: "Clearance", discount: "Up to 70% OFF", image: "/deal-3.jpg" },
 ]
 
-export default function HomePage() {
+export default function LandingPage() {
+  const [currentProductSlide, setCurrentProductSlide] = useState(0)
+
+  const nextProductSlide = () => {
+    setCurrentProductSlide((prev) => (prev + 1) % (products.length - 5))
+  }
+
+  const prevProductSlide = () => {
+    setCurrentProductSlide((prev) => (prev - 1 + (products.length - 5)) % (products.length - 5))
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-blue-600 text-white">
@@ -36,8 +52,7 @@ export default function HomePage() {
           <div className="flex items-center space-x-4">
             <Image src="/logo.png" alt="Logo" width={80} height={40} />
             <div className="relative">
-              <input
-                type="text"
+              <Input
                 className="w-96 pl-10 pr-4 py-2 rounded-sm text-black"
                 placeholder="Search for products, brands and more"
               />
@@ -45,9 +60,7 @@ export default function HomePage() {
             </div>
           </div>
           <nav className="flex items-center space-x-6">
-            <button className="bg-transparent hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-              Login
-            </button>
+            <Button variant="ghost">Login</Button>
             <Link href="#" className="flex items-center hover:underline">
               Become a Seller
             </Link>
@@ -105,35 +118,56 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white">
               <h2 className="text-4xl font-bold mb-4">Summer Sale</h2>
               <p className="text-xl mb-6">Up to 50% off on selected items</p>
-              <button className="bg-white text-blue-600 font-bold py-2 px-4 rounded">
-                Shop Now
-              </button>
+              <Button size="lg">Shop Now</Button>
             </div>
           </div>
         </section>
 
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6">Best Sellers</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {products.map((product) => (
-              <div key={product.id} className="bg-white p-4 rounded-lg shadow-md flex flex-col">
-                <Image src={product.image} alt={product.name} width={200} height={200} className="w-full h-32 object-cover mb-4 rounded" />
-                <h3 className="font-semibold mb-1 text-sm">{product.name}</h3>
-                <div className="flex items-center mb-1">
-                  {[...Array(5)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className={`h-3 w-3 ${i < Math.floor(product.rating) ? "text-yellow-400" : "text-gray-300"} fill-current`}
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                  <span className="text-xs text-gray-500 ml-1">({product.rating})</span>
-                </div>
-                <p className="text-green-600 font-semibold text-sm mt-auto">${product.price.toFixed(2)}</p>
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${currentProductSlide * (100 / 6)}%)` }}
+              >
+                {products.map((product) => (
+                  <div key={product.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/6 flex-shrink-0 px-2">
+                    <div className="bg-white p-4 rounded-lg shadow-md h-full flex flex-col">
+                      <Image src={product.image} alt={product.name} width={200} height={200} className="w-full h-32 object-cover mb-4 rounded" />
+                      <h3 className="font-semibold mb-1 text-sm">{product.name}</h3>
+                      <div className="flex items-center mb-1">
+                        {[...Array(5)].map((_, i) => (
+                          <svg
+                            key={i}
+                            className={`h-3 w-3 ${i < Math.floor(product.rating) ? "text-yellow-400" : "text-gray-300"} fill-current`}
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                        <span className="text-xs text-gray-500 ml-1">({product.rating})</span>
+                      </div>
+                      <p className="text-green-600 font-semibold text-sm mt-auto">${product.price.toFixed(2)}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <button
+              onClick={prevProductSlide}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
+              aria-label="Previous product"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+            <button
+              onClick={nextProductSlide}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
+              aria-label="Next product"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
           </div>
         </section>
 
@@ -146,9 +180,7 @@ export default function HomePage() {
                 <div className="p-4">
                   <h3 className="font-semibold text-lg mb-2">{deal.name}</h3>
                   <p className="text-red-600 font-bold text-xl">{deal.discount}</p>
-                  <button className="mt-4 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                    Shop Now
-                  </button>
+                  <Button className="mt-4 w-full">Shop Now</Button>
                 </div>
               </div>
             ))}
