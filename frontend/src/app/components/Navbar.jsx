@@ -19,7 +19,7 @@ export default function Navbar() {
           <button className="lg:hidden" onClick={toggleSidebar} aria-label="Toggle menu">
             <Menu className="h-6 w-6" />
           </button>
-          <Image src="/logo.png" alt="Logo" width={80} height={40} />
+          <Image src="/images/vox-logo.png" alt="Logo" width={80} height={40} />
           <div className="relative hidden lg:block">
             <input
               type="text"
