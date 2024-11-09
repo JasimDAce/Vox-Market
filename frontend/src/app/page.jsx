@@ -7,10 +7,10 @@ import Footer from "./components/Footer"
 const categories = [
   { name: "Electronics", image: "/images/landing/category/electronics.jpg" },
   { name: "Fashion", image: "/images/landing/category/fashion.jpg" },
-  { name: "Home", image: "/images/landing/category/home.jpg" },
-  { name: "Beauty", image: "/category-beauty.jpg" },
-  { name: "Sports", image: "/category-sports.jpg" },
-  { name: "Books", image: "/category-books.jpg" },
+  { name: "Home", image: "/images/landing/category/home2.jpg" },
+  { name: "Beauty", image: "/images/landing/category/beauty1.jpg" },
+  { name: "Sports", image: "/images/landing/category/sport.jpg" },
+  { name: "Books", image: "/images/landing/category/book.jpg" },
 ]
 
 const products = [
