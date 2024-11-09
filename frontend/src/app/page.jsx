@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Search, ShoppingCart, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react"
 
 const categories = [
-  { name: "Electronics", image: "/category-electronics.jpg" },
+  { name: "Electronics", image: "/images/category/electronics.jpg" },
   { name: "Fashion", image: "/category-fashion.jpg" },
   { name: "Home", image: "/category-home.jpg" },
   { name: "Beauty", image: "/category-beauty.jpg" },
