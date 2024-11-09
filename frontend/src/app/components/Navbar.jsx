@@ -43,7 +43,7 @@ export default function Navbar() {
                         </button>
                       )}
           </button>
-          <Link href="/seller-login" className="flex items-center hover:underline">
+          <Link href="/seller-signup" className="flex items-center hover:underline">
             Become a Seller
           </Link>
           <div className="relative group">
@@ -91,9 +91,15 @@ export default function Navbar() {
           />
           <nav className="space-y-4">
             <button className="w-full bg-[#8a6246] hover:bg-[#75533b] text-white font-semibold py-2 px-4 rounded transition duration-300">
-              Login
+            {!loggedIn ? (
+                        <Link href="/login">Login Now</Link>
+                      ) : (
+                        <button onClick={logout} className="border p-4">
+                          Logout
+                        </button>
+                      )}
             </button>
-            <Link href="#" className="block hover:underline">
+            <Link href="/seller-signup" className="block hover:underline">
               Become a Seller
             </Link>
             <div className="space-y-2">
