@@ -4,8 +4,8 @@ import { Search, ShoppingCart, ChevronDown, ChevronLeft, ChevronRight } from "lu
 import Navbar from "./components/Navbar"
 
 const categories = [
-  { name: "Electronics", image: "/images/category/electronics.jpg" },
-  { name: "Fashion", image: "/category-fashion.jpg" },
+  { name: "Electronics", image: "/images/landing/category/electronics.jpg" },
+  { name: "Fashion", image: "/images/landing/category/fashion.jpg" },
   { name: "Home", image: "/category-home.jpg" },
   { name: "Beauty", image: "/category-beauty.jpg" },
   { name: "Sports", image: "/category-sports.jpg" },
