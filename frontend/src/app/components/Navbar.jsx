@@ -4,9 +4,11 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Search, ShoppingCart, ChevronDown, Menu, X } from "lucide-react"
+import useAppContext from '@/context/AppContext'
 
 export default function Navbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const { logout, loggedIn } = useAppContext();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -18,8 +20,8 @@ export default function Navbar() {
         <div className="flex items-center space-x-4">
           <button className="lg:hidden" onClick={toggleSidebar} aria-label="Toggle menu">
             <Menu className="h-6 w-6" />
-          </button>
-          <Image src="/images/vox-logo.png" alt="Logo" width={80} height={40} />
+          </button><Link href='/'>
+          <Image src="/images/vox-logo.png" alt="Logo" width={80} height={40} /></Link>
           <div className="relative hidden lg:block">
             <input
               type="text"
@@ -30,10 +32,18 @@ export default function Navbar() {
           </div>
         </div>
         <nav className="hidden lg:flex items-center space-x-6">
-          <button className="bg-transparent hover:bg-[#8a6246] text-white font-semibold py-2 px-4 rounded transition duration-300">
-            Login
+          <button
+            href="/login"
+          className="bg-transparent hover:bg-[#8a6246] text-white font-semibold py-2 px-4 rounded transition duration-300">
+          {!loggedIn ? (
+                        <Link href="/login">Login Now</Link>
+                      ) : (
+                        <button onClick={logout} className="border p-4">
+                          Logout
+                        </button>
+                      )}
           </button>
-          <Link href="#" className="flex items-center hover:underline">
+          <Link href="/seller-login" className="flex items-center hover:underline">
             Become a Seller
           </Link>
           <div className="relative group">
