@@ -51,22 +51,25 @@ export default function HomePage() {
         </section>
 
         <section className="mb-12">
-          <div className="relative h-[400px] rounded-lg overflow-hidden">
-            <Image
-              src="/hero-image.jpg"
-              alt="Hero Image"
-              layout="fill"
-              objectFit="cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white">
-              <h2 className="text-4xl font-bold mb-4">Summer Sale</h2>
-              <p className="text-xl mb-6">Up to 50% off on selected items</p>
-              <button className="bg-white text-blue-600 font-bold py-2 px-4 rounded">
-                Shop Now
-              </button>
-            </div>
-          </div>
+        <div className="relative h-[400px] rounded-lg overflow-hidden">
+  <Image
+    src="/images/saleee.jpg"
+    alt="Hero Image"
+    layout="fill"
+    objectFit="cover"
+    objectPosition="top"  // Aligns the image to the top
+    priority
+  />
+  <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col justify-center items-center text-white">
+    <h2 className="text-4xl font-bold mb-4">Summer Sale</h2>
+    <p className="text-xl mb-6">Up to 50% off on selected items</p>
+    <button className="bg-white text-blue-600 font-bold py-2 px-4 rounded">
+      Shop Now
+    </button>
+  </div>
+</div>
+
+
         </section>
 
         <section className="mb-12">
