@@ -1,9 +1,11 @@
 const express = require("express");
 const Model = require("../models/ProductModel");
+const verifyToken = require("../middleware/verifyToken");
 
 const router = express.Router();
 
-router.post("/addProduct", (req, res) => {
+router.post("/addProduct", verifyToken, (req, res) => {
+  req.body.seller = req.user._id;
   console.log(req.body);
 
   new Model(req.body)
@@ -28,6 +30,7 @@ router.get("/getall", (req, res) => {
       res.status(500).json(err);
     });
 });
+
 router.get("/getbyid/:id", (req, res) => {
   Model.findById(req.params.id)
     .then((result) => {
@@ -38,6 +41,7 @@ router.get("/getbyid/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
+
 router.get("/getbyname/:name", (req, res) => {
   Model.find({ name: req.params.name })
     .then((result) => {
