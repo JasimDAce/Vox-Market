@@ -10,7 +10,8 @@ import Link from 'next/link'
 
 const AddProduct = () => {
   const router = useRouter()
-  const [imagePreview, setImagePreview] = useState(null)
+  const [imagePreview, setImagePreview] = useState(null);
+  const token = localStorage.getItem('sellerToken')
 
   const initialValues = {
     productName: '',
@@ -49,7 +50,11 @@ const AddProduct = () => {
     };
   
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/p/addProduct`,newProduct);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/p/addProduct`,newProduct, {
+        headers: {
+          'x-auth-token': token
+        }
+      });
 
       console.log(response.status)
       resetForm()
