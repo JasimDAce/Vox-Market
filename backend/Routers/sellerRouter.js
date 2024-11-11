@@ -4,6 +4,13 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET || "topsecret";
+const maxAge = 60 * 60 * 24 * 1;
+
+const jwtSignature = (id,name,email) => {
+  const payload = { id,name,email };
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: maxAge });
+};
 
 router.get("/getAll", (req, res) => {
   Model.find()
@@ -16,14 +23,21 @@ router.get("/getAll", (req, res) => {
     });
 });
 
-router.post("/addSeller", (req, res) => {
+router.post("/addSeller",(req, res) => {
   console.log(req.body);
+  // const { name, email, password, phoneNumber } = req.body;
   //asynchronous that why we will get promise obj
   new Model(req.body)
     .save()
     //thenc is the shortcut
     .then((result) => {
-      res.status(200).json(result);
+      const token = jwtSignature(result._id,result.name,result.email);
+      res.status(200).json({token: token,
+        seller:{ name: result.name,
+          email: result.email,
+          avatar: result.avatar}
+       });  
+      
     })
     .catch((err) => {
       console.log(err);
@@ -50,7 +64,11 @@ router.post("/authenticate", (req, res) => {
                 console.log(err);
                 return res.status(500).json(err);
               } else {
-                return res.status(200).json({ token: token });
+                return res.status(200).json({ token: token,
+                  seller:{name:result.name,
+                  email:result.email,
+                  avatar:result.avatar }
+                });
               }
             }
           );

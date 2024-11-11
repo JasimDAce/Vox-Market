@@ -13,11 +13,11 @@ const signUpSchema = Yup.object().shape({
     .required("Name is required"),
   email: Yup.string().email("Invalid email").required("email is required"),
   password: Yup.string()
-    .required("password is required")
-    .matches(/[a-z]/, "must include a lower case")
-    .matches(/[A-Z]/, "must include an upper case")
-    .matches(/[0-9]/, "must include a number")
-    .matches(/\w/, "must include a special character"),
+    .required("password is required"),
+    // .matches(/[a-z]/, "must include a lower case")
+    // .matches(/[A-Z]/, "must include an upper case")
+    // .matches(/[0-9]/, "must include a number")
+    // .matches(/\w/, "must include a special character"),
   confirmPassword: Yup.string()
     .label("confirm password")
     .required("confirm password is required")
@@ -43,7 +43,9 @@ const SignUp = () => {
       axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/s/addSeller`, values)
         .then((response) => {
-          console.log(response.status);
+          console.log(response);
+          localStorage.setItem("Sellertoken",response.data.token);
+          localStorage.setItem("Seller", JSON.stringify(response.data.seller));
           resetForm();
           toast.success("Seller added successfully");
           router.push("./seller/profile");
