@@ -14,10 +14,13 @@ export default function ManageProducts() {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [productToDelete, setProductToDelete] = useState(null)
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' })
+  const token = localStorage.getItem('Sellertoken');
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/p/getall`)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/p/getall`,{headers:{
+        'x-auth-token': token
+      }})
       setProducts(res.data)
     } catch (error) {
       console.error('Failed to fetch products:', error)
