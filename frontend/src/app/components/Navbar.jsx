@@ -1,19 +1,51 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Search, ShoppingCart, ChevronDown, Menu, X } from "lucide-react"
 import useAppContext from '@/context/AppContext'
+import useSpeechRecognition from './useSpeechRecognition';
+import { useRouter } from 'next/navigation'
+
 
 export default function Navbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const { logout, loggedIn } = useAppContext();
+  const router = useRouter();
 
+
+ 
+
+  const handleLogin = () => {
+  console.log("Login command detected");
+  // Your login logic here, e.g., routing to the login page or triggering a login modal
+  // Example: navigate('/login') or set state for login modal
+  router.push('/login');
+};
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
   }
 
+  const loginCommand = useCallback(() => {
+   // console.log('Login command detected'); // Make sure this is being logged
+    handleLogin();
+  }, [router]);
+  
+  const { startListening, stopListening, isListening } = useSpeechRecognition(loginCommand);
+  // const { startListening, stopListening, isListening } = useSpeechRecognition();
+
+  // useEffect(() => {
+  //   if (loginCommand === "start") {
+  //     startListening();
+  //   } else {
+  //     stopListening();
+  //   }
+
+  //   // Clean up on unmount or when command changes
+  //   return () => stopListening();
+  // }, [loginCommand, startListening, stopListening]);
+ 
   return (
     <header className="bg-[#a07255] text-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -32,7 +64,12 @@ export default function Navbar() {
           </div>
         </div>
         <nav className="hidden lg:flex items-center space-x-6">
+        <button onClick={startListening}>
+  {isListening ? 'Stop Listening' : 'Start Listening'}
+</button>
+
           <button
+        
             href="/login"
           className="bg-transparent hover:bg-[#8a6246] text-white font-semibold py-2 px-4 rounded transition duration-300">
           {!loggedIn ? (
