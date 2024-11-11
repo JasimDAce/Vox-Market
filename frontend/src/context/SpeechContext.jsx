@@ -1,45 +1,35 @@
+// SpeechProvider.jsx
 import "regenerator-runtime/runtime";
-import React, { createContext, useState, useEffect } from "react";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import React, { createContext, useState, useEffect, useCallback } from "react";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import { useRouter } from "next/navigation";
 
 const SpeechContext = createContext();
 
 const SpeechProvider = ({ children }) => {
   const [command, setCommand] = useState("");
+  const [triggerLogin, setTriggerLogin] = useState(false);
   const router = useRouter();
-
-  const handleLogin = () => {
-    console.log("Login command detected");
-    router.push("/login");
-  };
 
   const commands = [
     {
       command: "*",
       callback: (transcript) => {
-        if (transcript.toLowerCase().includes('home')) {
+        if (transcript.toLowerCase().includes("home")) {
           console.log("home command detected");
-          window.location.href = "/";   
-         
+          window.location.href = "/";
         }
-        if (transcript.toLowerCase().includes("sign up.")) {
+        if (transcript.toLowerCase().includes("sign up")) {
           console.log("signup command detected");
-            window.location.href = "/signup";
-          //router.push("/signup");
+          window.location.href = "/signup";
         }
         if (transcript.toLowerCase().includes("seller login")) {
           console.log("seller login command detected");
           window.location.href = "/seller-login";
-        //  router.push("/seller-login");
         }
         if (transcript.toLowerCase().includes("login")) {
-            router.push("/login");
-            //   handleLogin();
-        } else {
-          console.log(`Command not found ${transcript}`);
+          console.log("login command detected");
+          setTriggerLogin(true); // Trigger login action in SellerLogin component
         }
       },
     },
@@ -56,7 +46,6 @@ const SpeechProvider = ({ children }) => {
   }, [transcript]);
 
   useEffect(() => {
-    // Automatically stop listening when the user stops speaking
     if (listening) {
       SpeechRecognition.onend = () => {
         console.log("User stopped speaking, stopping microphone.");
@@ -66,22 +55,16 @@ const SpeechProvider = ({ children }) => {
   }, [listening]);
 
   const startListening = () => {
-    if (SpeechRecognition) {
-      resetTranscript();
-      SpeechRecognition.startListening({ continuous: true });
-    } else {
-      console.warn("SpeechRecognition is not available");
-    }
+    resetTranscript();
+    SpeechRecognition.startListening({ continuous: true });
   };
 
   const stopListening = () => {
-    if (SpeechRecognition) {
-      SpeechRecognition.stopListening();
-    }
+    SpeechRecognition.stopListening();
   };
 
   return (
-    <SpeechContext.Provider value={{ command, startListening, stopListening }}>
+    <SpeechContext.Provider value={{ command:"click *", startListening, stopListening, triggerLogin, setTriggerLogin }}>
       {children}
     </SpeechContext.Provider>
   );
