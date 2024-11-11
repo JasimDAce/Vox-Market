@@ -51,7 +51,7 @@ export default function HomePage() {
         </section>
 
         <section className="mb-12">
-        <div className="relative h-[400px] rounded-lg overflow-hidden">
+        <div className="relative h-[400px] rounded-lg overflow-hidden bg-black">
   {/* Desktop Image */}
   <Image
      src="/images/saleee.jpg"
@@ -60,7 +60,7 @@ export default function HomePage() {
     objectFit="cover"
     objectPosition="top"
     priority
-    className="hidden md:block" // Only shows on larger screens
+    className="hidden md:block opacity-85 " // Only shows on larger screens
   />
   
   {/* Mobile Image */}
@@ -75,8 +75,8 @@ export default function HomePage() {
   />
 
   <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col justify-center items-center text-white">
-    <h2 className="text-3xl md:text-4xl font-bold mb-4">Summer Sale</h2>
-    <p className="text-lg md:text-xl mb-6">Up to 50% off on selected items</p>
+    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Summer Sale</h2>
+    <p className="text-lg md:text-xl  mb-6">Up to 50% off on selected items</p>
     <button className="bg-white text-blue-600 font-bold py-2 px-4 rounded">
       Shop Now
     </button>
