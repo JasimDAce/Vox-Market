@@ -11,7 +11,7 @@ import Link from 'next/link'
 const AddProduct = () => {
   const router = useRouter()
   const [imagePreview, setImagePreview] = useState(null);
-  const token = localStorage.getItem('sellerToken')
+  const token = localStorage.getItem('Sellertoken')
 
   const initialValues = {
     productName: '',
