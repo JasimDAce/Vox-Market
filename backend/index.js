@@ -15,7 +15,7 @@ const port = 5000;
 
 //middlewares
 app.use(cors({
-    origin:'http://localhost:3000', 
+    origin:'http://localhost:3000',
     credentials: true
 }))//this allows the cross origin request from port 3000
 

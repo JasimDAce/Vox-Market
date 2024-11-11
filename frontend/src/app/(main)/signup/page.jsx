@@ -42,9 +42,11 @@ const SignUp = () => {
     onSubmit(values, { resetForm, setSubmitting }) {
       console.log(values);
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/u/addUser`, values,{withCredentials:true})
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/u/addUser`, values)
         .then((response) => {
           console.log(response.status);
+          localStorage.setItem('Usertoken',response.data.token);
+          
           resetForm();
           toast.success("user added successfully");
           router.push("/");

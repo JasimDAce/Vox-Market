@@ -26,22 +26,18 @@ const Login = () => {
     onSubmit(values, { resetForm, setSubmitting }) {
       console.log(values);
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/u/authenticate`, values,{withCredentials: true})
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/u/authenticate`, values)
         .then((response) => {
           console.log(response.status);
           resetForm();
           toast.success("Loggedin successfully");
-      
-          localStorage.setItem("user", JSON.stringify(response.data));
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          localStorage.setItem("Usertoken", JSON.stringify(response.data.token));
           setLoggedIn(true);
           router.push("/");
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.data.code === 11000) {
-            toast.error("Email already exists");
-          }
           setSubmitting(false);
         });
     },

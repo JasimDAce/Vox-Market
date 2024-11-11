@@ -11,13 +11,13 @@ export const AppProvider = ({ children }) => {
 
   const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("Usertoken"));
     setLoggedIn(user || false);
   }, []);
 
   const logout = () => {
     localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.removeItem("Usertoken");
     setLoggedIn(false);
     router.push("/login");
   };
