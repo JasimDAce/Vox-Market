@@ -9,12 +9,7 @@ import * as Yup from "yup";
 const SellerLoginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string()
-      .required("Please Enter your password")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-      )
-      ,
+      .required("Please Enter your password"),
   });
 const SellerLogin = () => {
 
@@ -30,8 +25,10 @@ const SellerLogin = () => {
       console.log(values);
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/s/authenticate`,values)
       .then((result) => {
+
+        localStorage.setItem('Sellertoken',result.data.token);
+        localStorage.setItem('Seller', JSON.stringify(result.data.seller));
         toast.success('Login Success')
-        localStorage.setItem('sellerToken',result.data.token);
         router.push('./seller/profile')
       }).catch((err) => {
         console.log(err);
