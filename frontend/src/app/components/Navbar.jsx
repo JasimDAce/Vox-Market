@@ -1,61 +1,40 @@
-'use client'
+"use client";
 
-import { useCallback, useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Search, ShoppingCart, ChevronDown, Menu, X } from "lucide-react"
-import useAppContext from '@/context/AppContext'
-import useSpeechRecognition from './useSpeechRecognition';
-import { useRouter } from 'next/navigation'
+import { useCallback, useState, useContext } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Search, ShoppingCart, ChevronDown, Menu, X } from "lucide-react";
+import useAppContext from "@/context/AppContext";
 
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { logout, loggedIn } = useAppContext();
-  const router = useRouter();
 
-
- 
-
-  const handleLogin = () => {
-  console.log("Login command detected");
-  router.push('/login');
-};
-
-const handleSignup = () => {
-  console.log("signup command detected");
-  router.push('/signup');
-};
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
-  const loginCommand = useCallback(() => {
-      handleLogin();
-  }, [router]);
-  
-  const { startListening, stopListening, isListening } = useSpeechRecognition(loginCommand);
-  // const { startListening, stopListening, isListening } = useSpeechRecognition();
-
-  // useEffect(() => {
-  //   if (loginCommand === "start") {
-  //     startListening();
-  //   } else {
-  //     stopListening();
-  //   }
-
-  //   // Clean up on unmount or when command changes
-  //   return () => stopListening();
-  // }, [loginCommand, startListening, stopListening]);
- 
   return (
     <header className="bg-[#a07255] text-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <button className="lg:hidden" onClick={toggleSidebar} aria-label="Toggle menu">
+          <button
+            className="lg:hidden"
+            onClick={toggleSidebar}
+            aria-label="Toggle menu"
+          >
             <Menu className="h-6 w-6" />
-          </button><Link href='/'>
-          <Image src="/images/vox-logo.png" alt="Logo" width={80} height={40} /></Link>
+          </button>
+          <Link href="/">
+            <Image
+              src="/images/vox-logo.png"
+              alt="Logo"
+              width={80}
+              height={40}
+            />
+          </Link>
           <div className="relative hidden lg:block">
             <input
               type="text"
@@ -66,23 +45,22 @@ const handleSignup = () => {
           </div>
         </div>
         <nav className="hidden lg:flex items-center space-x-6">
-        <button onClick={startListening}>
-  {isListening ? 'Stop Listening' : 'Start Listening'}
-</button>
-
           <button
-        
             href="/login"
-          className="bg-transparent hover:bg-[#8a6246] text-white font-semibold py-2 px-4 rounded transition duration-300">
-          {!loggedIn ? (
-                        <Link href="/login">Login Now</Link>
-                      ) : (
-                        <button onClick={logout} className="border p-4">
-                          Logout
-                        </button>
-                      )}
+            className="bg-transparent hover:bg-[#8a6246] text-white font-semibold py-2 px-4 rounded transition duration-300"
+          >
+            {!loggedIn ? (
+              <Link href="/login">Login Now</Link>
+            ) : (
+              <button onClick={logout} className="border p-4">
+                Logout
+              </button>
+            )}
           </button>
-          <Link href="/seller-signup" className="flex items-center hover:underline">
+          <Link
+            href="/seller-signup"
+            className="flex items-center hover:underline"
+          >
             Become a Seller
           </Link>
           <div className="relative group">
@@ -90,16 +68,28 @@ const handleSignup = () => {
               More <ChevronDown className="h-4 w-4 ml-1" />
             </button>
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block">
-              <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              <Link
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
                 Notification Preferences
               </Link>
-              <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              <Link
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
                 24x7 Customer Care
               </Link>
-              <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              <Link
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
                 Advertise
               </Link>
-              <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              <Link
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
                 Download App
               </Link>
             </div>
@@ -115,7 +105,11 @@ const handleSignup = () => {
       </div>
 
       {/* Mobile Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#a07255] transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:hidden`}>
+      <div
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#a07255] transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out lg:hidden`}
+      >
         <div className="flex justify-between items-center p-4 border-b border-[#8a6246]">
           <Image src="/logo.png" alt="Logo" width={80} height={40} />
           <button onClick={toggleSidebar} aria-label="Close menu">
@@ -130,13 +124,13 @@ const handleSignup = () => {
           />
           <nav className="space-y-4">
             <button className="w-full bg-[#8a6246] hover:bg-[#75533b] text-white font-semibold py-2 px-4 rounded transition duration-300">
-            {!loggedIn ? (
-                        <Link href="/login">Login Now</Link>
-                      ) : (
-                        <button onClick={logout} className="border p-4">
-                          Logout
-                        </button>
-                      )}
+              {!loggedIn ? (
+                <Link href="/login">Login Now</Link>
+              ) : (
+                <button onClick={logout} className="border p-4">
+                  Logout
+                </button>
+              )}
             </button>
             <Link href="/seller-signup" className="block hover:underline">
               Become a Seller
@@ -170,12 +164,12 @@ const handleSignup = () => {
 
       {/* Overlay */}
       {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" 
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           onClick={toggleSidebar}
           aria-hidden="true"
         ></div>
       )}
     </header>
-  )
+  );
 }

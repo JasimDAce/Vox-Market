@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Search, ShoppingCart, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+import SpeechRecognition from "./components/SpeechButton"
 
 const categories = [
   { name: "Electronics", image: "/images/landing/category/electronics.jpg" },
@@ -134,6 +135,7 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+      
             <Footer/>
     
     </div>

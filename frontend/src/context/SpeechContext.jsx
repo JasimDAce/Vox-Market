@@ -1,47 +1,90 @@
-// 'use client';
-// import React, { useState } from 'react';
-// import useAppContext from './AppContext';
+import "regenerator-runtime/runtime";
+import React, { createContext, useState, useEffect } from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import { useRouter } from "next/navigation";
 
-// const SpeechNavigator = () => {
-//   const { handleVoiceCommand } = useAppContext();
-//   const [message, setMessage] = useState("Tap to start listening...");
+const SpeechContext = createContext();
 
-//   const startListening = () => {
-//     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-//       setMessage("Speech Recognition not supported in this browser.");
-//       return;
-//     }
+const SpeechProvider = ({ children }) => {
+  const [command, setCommand] = useState("");
+  const router = useRouter();
 
-//     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-//     const recognition = new SpeechRecognition();
-//     recognition.continuous = false;
-//     recognition.lang = 'en-US';
-//     recognition.interimResults = false;
-//     recognition.maxAlternatives = 1;
+  const handleLogin = () => {
+    console.log("Login command detected");
+    router.push("/login");
+  };
 
-//     // Event when speech is recognized
-//     recognition.onresult = (event) => {
-//       const command = event.results[0][0].transcript.toLowerCase().trim();
-//       setMessage(`Heard: "${command}"`);
+  const commands = [
+    {
+      command: "*",
+      callback: (transcript) => {
+        if (transcript.toLowerCase().includes('home')) {
+          console.log("home command detected");
+          window.location.href = "/";   
+         
+        }
+        if (transcript.toLowerCase().includes("sign up.")) {
+          console.log("signup command detected");
+            window.location.href = "/signup";
+          //router.push("/signup");
+        }
+        if (transcript.toLowerCase().includes("seller login")) {
+          console.log("seller login command detected");
+          window.location.href = "/seller-login";
+        //  router.push("/seller-login");
+        }
+        if (transcript.toLowerCase().includes("login")) {
+            router.push("/login");
+            //   handleLogin();
+        } else {
+          console.log(`Command not found ${transcript}`);
+        }
+      },
+    },
+  ];
 
-//       // Pass the recognized command to the handleVoiceCommand function
-//       handleVoiceCommand(command);
-//     };
+  const { transcript, resetTranscript, listening } = useSpeechRecognition({
+    commands,
+  });
 
-//     recognition.onspeechend = () => recognition.stop();
-//     recognition.onerror = (event) => setMessage("Error occurred: " + event.error);
+  useEffect(() => {
+    if (transcript) {
+      setCommand(transcript);
+    }
+  }, [transcript]);
 
-//     recognition.start();
-//     setMessage("Listening...");
-//   };
+  useEffect(() => {
+    // Automatically stop listening when the user stops speaking
+    if (listening) {
+      SpeechRecognition.onend = () => {
+        console.log("User stopped speaking, stopping microphone.");
+        SpeechRecognition.stopListening();
+      };
+    }
+  }, [listening]);
 
-//   return (
-//     <div style={{ height: "100vh", textAlign: "center", paddingTop: "20px" }}>
-//       <h1>Speech Navigator</h1>
-//       <button onClick={startListening} style={{ padding: "10px", fontSize: "16px" }}>Start Listening</button>
-//       <p>{message}</p>
-//     </div>
-//   );
-// };
+  const startListening = () => {
+    if (SpeechRecognition) {
+      resetTranscript();
+      SpeechRecognition.startListening({ continuous: true });
+    } else {
+      console.warn("SpeechRecognition is not available");
+    }
+  };
 
-// export default SpeechNavigator;
+  const stopListening = () => {
+    if (SpeechRecognition) {
+      SpeechRecognition.stopListening();
+    }
+  };
+
+  return (
+    <SpeechContext.Provider value={{ command, startListening, stopListening }}>
+      {children}
+    </SpeechContext.Provider>
+  );
+};
+
+export { SpeechContext, SpeechProvider };
