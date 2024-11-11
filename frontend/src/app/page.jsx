@@ -14,20 +14,25 @@ const categories = [
 ]
 
 const products = [
-  { id: 1, name: "Wireless Earbuds", price: 79.99, image: "/product-1.jpg", rating: 4.5 },
-  { id: 2, name: "Smart Watch", price: 199.99, image: "/product-2.jpg", rating: 4.2 },
-  { id: 3, name: "Laptop", price: 999.99, image: "/product-3.jpg", rating: 4.8 },
-  { id: 4, name: "Smartphone", price: 699.99, image: "/product-4.jpg", rating: 4.6 },
-  { id: 5, name: "Bluetooth Speaker", price: 59.99, image: "/product-5.jpg", rating: 4.3 },
-  { id: 6, name: "Tablet", price: 349.99, image: "/product-6.jpg", rating: 4.7 },
-  { id: 7, name: "Headphones", price: 129.99, image: "/product-7.jpg", rating: 4.4 },
-  { id: 8, name: "Camera", price: 549.99, image: "/product-8.jpg", rating: 4.9 },
+  { id: 1, name: "Wireless Earbuds", price: 79.99, image: "/images/productsimg/Wireless Earbuds.jpg", rating: 4.5 },
+  { id: 2, name: "Smart Watch", price: 199.99, image: "/images/productsimg/SmartWatch.jpg", rating: 4.2 },
+  { id: 3, name: "Laptop", price: 999.99, image: "/images/productsimg/laptop.jpg", rating: 4.8 },
+  { id: 4, name: "Smartphone", price: 699.99, image: "/images/productsimg/Smartphone.jpg", rating: 4.6 },
+  { id: 5, name: "Bluetooth Speaker", price: 59.99, image: "/images/productsimg/Blue.jpg", rating: 4.3 },
+  { id: 6, name: "Tablet", price: 349.99, image: "/images/productsimg/Tablet.jpg", rating: 4.7 },
+  { id: 7, name: "Headphones", price: 129.99, image: "/images/productsimg/Head.jpg", rating: 4.4 },
+  { id: 8, name: "Camera", price: 549.99, image: "/images/productsimg/camera.jpg", rating: 4.9 },
+  { id: 9, name: "shoes", price: 349.99, image: "/images/productsimg/shoes.jpg", rating: 4.8},
+  { id: 10, name: "fragrance", price: 149.99, image: "/images/productsimg/frg.jpg", rating: 4.3 },
+  { id: 11, name: "Galsses", price: 249.99, image: "/images/productsimg/glasses.jpg", rating: 4.1 },
+  { id: 12, name: "Camera", price: 549.99, image: "/images/productsimg/lamp.jpg", rating: 4.4 },
 ]
+  
 
-const hotDeals = [
-  { id: 1, name: "Summer Sale", discount: "50% OFF", image: "/deal-1.jpg" },
-  { id: 2, name: "New Arrivals", discount: "30% OFF", image: "/deal-2.jpg" },
-  { id: 3, name: "Clearance", discount: "Up to 70% OFF", image: "/deal-3.jpg" },
+const hotDeals  = [ 
+  { id: 1, name: "Summer Sale", discount: "50% OFF", image: "/images/productsimg/p2.jpg" },
+  { id: 2, name: "New Arrivals", discount: "30% OFF", image: "/images/productsimg/sun.jpg" },
+  { id: 3, name: "Clearance", discount: "Up to 70% OFF", image: "/images/productsimg/clear.jpg" },
 ]
 
 export default function HomePage() {
