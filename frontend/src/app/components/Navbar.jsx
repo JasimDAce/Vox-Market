@@ -19,17 +19,19 @@ export default function Navbar() {
 
   const handleLogin = () => {
   console.log("Login command detected");
-  // Your login logic here, e.g., routing to the login page or triggering a login modal
-  // Example: navigate('/login') or set state for login modal
   router.push('/login');
+};
+
+const handleSignup = () => {
+  console.log("signup command detected");
+  router.push('/signup');
 };
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
   }
 
   const loginCommand = useCallback(() => {
-   // console.log('Login command detected'); // Make sure this is being logged
-    handleLogin();
+      handleLogin();
   }, [router]);
   
   const { startListening, stopListening, isListening } = useSpeechRecognition(loginCommand);
