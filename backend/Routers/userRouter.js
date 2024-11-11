@@ -9,8 +9,8 @@ require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET || "topsecret"; //change this code after every thing is working
 const maxAge = 60 * 60 * 24 * 1;
 
-const jwtSignature = (id) => {
-  const payload = { id };
+const jwtSignature = (id,name,email) => {
+  const payload = { id,name,email };
   return jwt.sign(payload, JWT_SECRET, { expiresIn: maxAge });
 };
 
@@ -43,13 +43,15 @@ router.post("/addUser", async (req, res) => {
   new Model({ name, email, password: newPass, phoneNumber })
     .save()
     .then((result) => {
-      const token = jwtSignature(result._id);
-      res.cookie("jwt", token, { maxAge: maxAge * 1000 });
-
+      const token = jwtSignature(result._id,result.name,result.email);
+      // res.cookie("jwt", token, { maxAge: maxAge * 1000 });
       console.log(token);
       console.log("new Password: ", newPass);
-
-      res.status(200).json({ user: result._id, token: token });
+      res.status(200).json({token: token,
+        user:{ name: result.name,
+          email: result.email,
+          avatar: result.avatar}
+       });  
     })
     .catch((err) => {
       res.status(500).json(err);
@@ -67,13 +69,13 @@ router.post("/authenticate", async (req, res) => {
       } else {
         bcrypt.compare(password, user.password, (err, isMatch) => {
           if (isMatch) {
-            const token = jwtSignature(user._id);
-            res.cookie("jwt", token, { maxAge: maxAge * 1000 });
+            const token = jwtSignature(user._id,user.name,user.email);
+            // res.cookie("jwt", token, { maxAge: maxAge * 1000 });
             return res.status(200).json({
               token,
-              name: user.name,
+              user:{ name: user.name,
               email: user.email,
-              avatar: user.avatar,
+              avatar: user.avatar}
             });
           } else {
             console.log(err);

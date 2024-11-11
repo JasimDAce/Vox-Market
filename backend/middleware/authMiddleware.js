@@ -3,10 +3,10 @@ const Model = require("../models/userModel");
 require("dotenv").config();
 
 const requireAuth = (req, res, next) => {
-  const token = req.cookies.jwt;
-
+  const token = req.headers["x-auth-token"];
+  
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET,(err, decodedToken) => {
       if (err) {
         console.log("verify err", err);
         // return res.redirect('/login');
