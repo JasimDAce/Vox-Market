@@ -11,7 +11,7 @@ export const AppProvider = ({ children }) => {
 
   const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("Usertoken"));
+    const user = (localStorage.getItem("Usertoken"));
     setLoggedIn(user || false);
   }, []);
 
