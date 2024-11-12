@@ -23,14 +23,25 @@ const SpeechProvider = ({ children }) => {
           console.log("signup command detected");
           window.location.href = "/signup";
         }
+        if (transcript.toLowerCase().includes("inventory")) {
+          console.log("signup command detected");
+          window.location.href = "/seller/manage-product";
+        }
         if (transcript.toLowerCase().includes("seller login")) {
           console.log("seller login command detected");
           window.location.href = "/seller-login";
         }
-        if (transcript.toLowerCase().includes("login")) {
+
+        if (transcript.toLowerCase().includes("add product")) {
+          console.log("seller login command detected");
+          window.location.href = "/seller/add-product";
+        }
+        
+        if (transcript.toLowerCase().includes("sign in")) {
           console.log("login command detected");
           setTriggerLogin(true); // Trigger login action in SellerLogin component
         }
+        console.log(`${transcript}`);
       },
     },
   ];

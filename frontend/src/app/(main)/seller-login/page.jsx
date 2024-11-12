@@ -28,7 +28,7 @@ const SellerLogin = () => {
           localStorage.setItem("Sellertoken", result.data.token);
           localStorage.setItem("Seller", JSON.stringify(result.data.seller));
           toast.success("Login Success");
-          router.push("./seller/profile");
+          router.push("./");
         })
         .catch((err) => {
           console.log(err);
